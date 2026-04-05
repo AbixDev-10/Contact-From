@@ -36,7 +36,7 @@ export const submitContactForm = async (request, response) => {
     }
 
     // Optional: only send an email when mail environment variables exist.
-    const transporter = nodemailer.createTransport({
+   const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: process.env.SMTP_USER,

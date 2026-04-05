@@ -1,5 +1,13 @@
 import { useState } from "react";
-const API_URL = `${import.meta.env.VITE_API_URL}/api/contact`;
+
+const configuredApiBaseUrl = import.meta.env.VITE_API_URL?.trim();
+const apiBaseUrl = import.meta.env.DEV
+  ? ""
+  : configuredApiBaseUrl
+    ? configuredApiBaseUrl.replace(/\/$/, "")
+    : "";
+const API_URL = `${apiBaseUrl}/api/contact`;
+
 const initialFormData = {
   name: "",
   email: "",
@@ -43,9 +51,7 @@ function ContactForm() {
       });
 
       const text = await response.text();
-console.log("RAW RESPONSE:", text);
-
-const result = text ? JSON.parse(text) : {};
+      const result = text ? JSON.parse(text) : {};
 
       if (!response.ok) {
         throw new Error(result.message || "Something went wrong.");
@@ -59,7 +65,10 @@ const result = text ? JSON.parse(text) : {};
     } catch (error) {
       setStatus({
         type: "error",
-        message: error.message || "Unable to send your message."
+        message:
+          error.message === "Failed to fetch"
+            ? "Cannot connect to the server. Make sure the backend is running."
+            : error.message || "Unable to send your message."
       });
     } finally {
       setIsSubmitting(false);
