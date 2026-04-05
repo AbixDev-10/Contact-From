@@ -27,7 +27,7 @@ function Navbar() {
         <span className="brand__badge">AS</span>
         <div>
           <p className="brand__title">Abishek S</p>
-          <p className="brand__subtitle">Contact Website</p>
+          <p className="brand__subtitle">Contact</p>
         </div>
       </div>
 

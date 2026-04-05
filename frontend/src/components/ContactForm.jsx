@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+const API_URL = `${import.meta.env.VITE_API_URL}/api/contact`;
 const initialFormData = {
   name: "",
   email: "",
@@ -34,7 +34,7 @@ function ContactForm() {
     });
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -42,7 +42,10 @@ function ContactForm() {
         body: JSON.stringify(formData)
       });
 
-      const result = await response.json();
+      const text = await response.text();
+console.log("RAW RESPONSE:", text);
+
+const result = text ? JSON.parse(text) : {};
 
       if (!response.ok) {
         throw new Error(result.message || "Something went wrong.");

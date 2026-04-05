@@ -37,14 +37,12 @@ export const submitContactForm = async (request, response) => {
 
     // Optional: only send an email when mail environment variables exist.
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT),
-      secure: Number(process.env.SMTP_PORT) === 465,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS
-      }
-    });
+  service: "gmail",
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS
+  }
+});
 
     await transporter.sendMail({
       from: process.env.MAIL_FROM || process.env.SMTP_USER,
