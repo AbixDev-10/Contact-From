@@ -1,4 +1,5 @@
 import { useState } from "react";
+const API = "https://contact-from-sm74.onrender.com";
 
 const configuredApiBaseUrl = import.meta.env.VITE_API_URL?.trim();
 const apiBaseUrl = import.meta.env.DEV
@@ -42,13 +43,13 @@ function ContactForm() {
     });
 
     try {
-      const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
-      });
+      fetch(`${API}/api/contact`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(data)
+});
 
       const text = await response.text();
       const result = text ? JSON.parse(text) : {};
